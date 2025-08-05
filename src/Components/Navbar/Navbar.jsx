@@ -8,7 +8,13 @@ import { ShopContext } from "../../Context/ShopContext";
 export const Navbar = () => {
   const [menu, setMenu] = useState("shop");
 
-  const { getTotalItems } = useContext(ShopContext);
+  const categoryId = {
+    mens: 4209,
+    womens: 2623,
+    kids: 15159,
+  };
+
+  const { getTotalItems, setSelectedCategory } = useContext(ShopContext);
 
   return (
     <div className="navbar">
@@ -20,6 +26,7 @@ export const Navbar = () => {
         <li
           onClick={() => {
             setMenu("shop");
+            setSelectedCategory("shop");
           }}
         >
           <Link style={{ textDecoration: "none" }} to="/">
@@ -29,27 +36,30 @@ export const Navbar = () => {
         </li>
         <li
           onClick={() => {
-            setMenu("men");
+            setMenu("mens");
+            setSelectedCategory("mens");
           }}
         >
           <Link style={{ textDecoration: "none" }} to="/men">
             Men
           </Link>
-          {menu === "men" ? <hr /> : <></>}
+          {menu === "mens" ? <hr /> : <></>}
         </li>
         <li
           onClick={() => {
-            setMenu("women");
+            setMenu("womens");
+            setSelectedCategory("womens");
           }}
         >
           <Link style={{ textDecoration: "none" }} to="/women">
             Women
           </Link>
-          {menu === "women" ? <hr /> : <></>}
+          {menu === "womens" ? <hr /> : <></>}
         </li>
         <li
           onClick={() => {
             setMenu("kids");
+            setSelectedCategory("kids");
           }}
         >
           <Link style={{ textDecoration: "none" }} to="/kids">
@@ -65,7 +75,7 @@ export const Navbar = () => {
         <Link to="/cart">
           <img src={cartIcon} alt="cart icon" />
         </Link>
-        <div className="nav-cart-count">{getTotalItems}</div>
+        <div className="nav-cart-count">{getTotalItems()}</div>
       </div>
     </div>
   );

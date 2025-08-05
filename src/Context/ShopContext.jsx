@@ -47,8 +47,12 @@ const ShopContextProvider = (props) => {
     return totalItem;
   };
 
+  const [selectedCategory, setSelectedCategory] = useState("shop");
+
   const contextValue = {
     allProducts,
+    selectedCategory,
+    setSelectedCategory,
     cartItems,
     addToCart,
     removeFromCart,

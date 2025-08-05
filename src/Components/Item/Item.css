@@ -4,6 +4,11 @@
     p {
         margin: 6px 0px;
     }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
 }
 
 .item-prices {
