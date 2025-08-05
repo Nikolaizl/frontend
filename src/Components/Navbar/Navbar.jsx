@@ -7,6 +7,7 @@ import { ShopContext } from "../../Context/ShopContext";
 
 export const Navbar = () => {
   const [menu, setMenu] = useState("shop");
+
   const { getTotalItems } = useContext(ShopContext);
 
   return (

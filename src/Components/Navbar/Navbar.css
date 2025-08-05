@@ -62,8 +62,14 @@
         cursor: pointer;
     }
 
+    button:hover {
+        background: #ff4141;
+        color: white;
+    }
+
     button:active {
-        background: #f3f3f3;
+        background: #ff1a1a;
+        color: white;
     }
 }
 
