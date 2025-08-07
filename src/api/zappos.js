@@ -1,3 +1,5 @@
+const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
+
 export async function getCategoryProducts(category, genders) {
   const url =
     "https://zappos1.p.rapidapi.com/products/list?page=1&sort=relevance%2Fdesc&limit=200";
@@ -10,7 +12,7 @@ export async function getCategoryProducts(category, genders) {
   const options = {
     method: "POST",
     headers: {
-      "x-rapidapi-key": "8e7f7467bfmshf8dfacae95683a8p17ed60jsn8454e328bf96",
+      "x-rapidapi-key": apiKey,
       "x-rapidapi-host": "zappos1.p.rapidapi.com",
       "Content-Type": "application/json",
     },
@@ -33,7 +35,7 @@ export async function getProductDetails(productId) {
   const options = {
     method: "GET",
     headers: {
-      "x-rapidapi-key": "8e7f7467bfmshf8dfacae95683a8p17ed60jsn8454e328bf96",
+      "x-rapidapi-key": apiKey,
       "x-rapidapi-host": "zappos1.p.rapidapi.com",
     },
   };
