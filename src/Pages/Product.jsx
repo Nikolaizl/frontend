@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Breadcrum } from "../Components/Breadcrum/Breadcrum";
 import { ProductDisplay } from "../Components/ProductDisplay/ProductDisplay";
-import { DescriptionBox } from "../Components/DescriptionBox/DescriptionBox";
-import { getProductDetails } from "../api/zappos";
-import { getCategoryProducts } from "../api/zappos";
+import DescriptionBox from "../Components/DescriptionBox/DescriptionBox";
+import { getProductDetails, getCategoryProducts } from "../api/zappos";
 import { ClipLoader } from "react-spinners";
+import { Container, Row, Col, Alert } from "react-bootstrap";
 
 export const Product = () => {
   const { productId } = useParams();
@@ -40,29 +40,57 @@ export const Product = () => {
 
   if (loading) {
     return (
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
-      >
+      <div className="d-flex justify-content-center my-5">
         <ClipLoader />
       </div>
     );
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return (
+      <Container className="my-4">
+        <Alert variant="danger" className="text-center">
+          {error}
+        </Alert>
+      </Container>
+    );
   }
 
   if (!product) {
-    return <p>No product found.</p>;
+    return (
+      <Container className="my-4">
+        <Alert variant="warning" className="text-center">
+          No product found.
+        </Alert>
+      </Container>
+    );
   }
 
   return (
-    <div>
-      <Breadcrum product={product} />
-      <ProductDisplay product={product} />
-      <DescriptionBox description={product.description} />
-      {/* <RelatedProducts products={relatedProducts} /> */}
-    </div>
+    <Container className="my-4">
+      <Row>
+        <Col>
+          <Breadcrum product={product} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <ProductDisplay product={product} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <DescriptionBox description={product.description} />
+        </Col>
+      </Row>
+
+      {/* Related Products */}
+      {/* <Row className="mt-4">
+        <Col>
+          <RelatedProducts products={relatedProducts} />
+        </Col>
+      </Row> */}
+    </Container>
   );
 };
 

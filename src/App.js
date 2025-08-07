@@ -10,6 +10,8 @@ import Footer from "./Components/Footer/Footer";
 import menBanner from "./Components/Assets/banner_mens.png";
 import womenBanner from "./Components/Assets/banner_women.png";
 import kidsBanner from "./Components/Assets/banner_kids.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   return (

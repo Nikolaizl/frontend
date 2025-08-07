@@ -1,17 +1,20 @@
 import React from "react";
-import "./DescriptionBox.css";
 
-export const DescriptionBox = ({ description }) => {
+const DescriptionBox = ({ description }) => {
   return (
-    <div className="descriptionbox">
-      <div className="descriptionbox-navigator">
-        <div className="descriptionbox-navbox">Description</div>
-      </div>
-      <div className="descriptionbox-description">
+    <div className="container my-5">
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <span className="nav-link active fw-semibold">Description</span>
+        </li>
+      </ul>
+      <div className="border p-4 mt-3 bg-light">
         {description ? (
-          <div dangerouslySetInnerHTML={{ __html: description }}></div>
+          <div dangerouslySetInnerHTML={{ __html: description }} />
         ) : (
-          <p>No description available for this product.</p>
+          <p className="text-muted">
+            No description available for this product.
+          </p>
         )}
       </div>
     </div>

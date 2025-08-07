@@ -1,17 +1,17 @@
 import React, { useContext } from "react";
-import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
 import removeIcon from "../Assets/cart_cross_icon.png";
+import "./CartItems.css"; // still needed for minimal custom styles
 
 export const CartItems = () => {
   const { cartItems, removeFromCart, getTotalAmount } = useContext(ShopContext);
 
   if (cartItems.length === 0) {
     return (
-      <div className="cart-empty">
+      <div className="text-center p-5">
         <h2>Your cart is empty</h2>
         <p>Looks like you haven’t added anything yet.</p>
-        <a href="/" className="cart-empty-btn">
+        <a href="/" className="btn btn-dark mt-3">
           Start Shopping
         </a>
       </div>
@@ -19,64 +19,82 @@ export const CartItems = () => {
   }
 
   return (
-    <div className="cartitems">
-      <div className="cartitems-format-main">
-        <p>Products</p>
-        <p>Title</p>
-        <p>Price</p>
-        <p>Quantity</p>
-        <p>Total</p>
-        <p>Remove</p>
+    <div className="container my-5">
+      <div className="table-responsive">
+        <table className="table align-middle text-center">
+          <thead className="table-light">
+            <tr>
+              <th>Product</th>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cartItems.map((item) => (
+              <tr key={item.id}>
+                <td>
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="product-img"
+                  />
+                </td>
+                <td>{item.name}</td>
+                <td>${item.price.toFixed(2)}</td>
+                <td>
+                  <span className="border px-2 py-1 d-inline-block">
+                    {item.quantity}
+                  </span>
+                </td>
+                <td>${(item.price * item.quantity).toFixed(2)}</td>
+                <td>
+                  <img
+                    src={removeIcon}
+                    alt="remove"
+                    className="remove-icon"
+                    onClick={() => removeFromCart(item.id)}
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <hr />
 
-      {cartItems.map((item) => (
-        <div key={item.id} className="cartitems-format-main cartitems-format">
-          <img
-            src={item.image}
-            alt={item.name}
-            className="carticon-product-icon"
-          />
-          <p>{item.name}</p>
-          <p>${item.price.toFixed(2)}</p>
-          <button className="cartitems-quantity">{item.quantity}</button>
-          <p>${(item.price * item.quantity).toFixed(2)}</p>
-          <img
-            className="cartitems-remove-icon"
-            onClick={() => removeFromCart(item.id)}
-            src={removeIcon}
-            alt="remove"
-          />
+      <div className="row gy-4 justify-content-between align-items-start mt-4">
+        {/* Cart Totals */}
+        <div className="col-lg-5">
+          <h4>Cart Totals</h4>
+          <ul className="list-group mb-3">
+            <li className="list-group-item d-flex justify-content-between">
+              <span>Subtotal</span>
+              <strong>${getTotalAmount()}</strong>
+            </li>
+            <li className="list-group-item d-flex justify-content-between">
+              <span>Shipping Fee</span>
+              <strong>Free</strong>
+            </li>
+            <li className="list-group-item d-flex justify-content-between">
+              <span>Total</span>
+              <strong>${getTotalAmount()}</strong>
+            </li>
+          </ul>
+          <button className="btn btn-danger w-100">PROCEED TO CHECKOUT</button>
         </div>
-      ))}
-      <hr />
 
-      <div className="cartitems-down">
-        <div className="cartitems-total">
-          <h1>Cart Totals</h1>
-          <div>
-            <div className="cartitems-total-item">
-              <p>Subtotal</p>
-              <p>${getTotalAmount()}</p>
-            </div>
-            <hr />
-            <div className="cartitems-total-item">
-              <p>Shipping Fee</p>
-              <p>Free</p>
-            </div>
-            <hr />
-            <div className="cartitems-total-item">
-              <h3>Total</h3>
-              <h3>${getTotalAmount()}</h3>
-            </div>
-          </div>
-          <button>PROCEED TO CHECKOUT</button>
-        </div>
-        <div className="cartitems-promocode">
+        {/* Promo Code */}
+        <div className="col-lg-6">
           <p>If you have a promo code, enter it here!</p>
-          <div className="cartitems-promobox">
-            <input type="text" placeholder="Promo Code" />
-            <button>Submit</button>
+          <div className="input-group">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Promo Code"
+            />
+            <button className="btn btn-dark">Submit</button>
           </div>
         </div>
       </div>
