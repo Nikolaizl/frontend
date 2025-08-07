@@ -10,6 +10,8 @@ import Footer from "./Components/Footer/Footer";
 import menBanner from "./Components/Assets/banner_mens.png";
 import womenBanner from "./Components/Assets/banner_women.png";
 import kidsBanner from "./Components/Assets/banner_kids.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   return (
@@ -30,9 +32,7 @@ function App() {
             path="/kids"
             element={<ShopCategory banner={kidsBanner} category="kid" />}
           />
-          <Route path="/product" element={<Product />}>
-            <Route path=":productId" element={<Product />} />
-          </Route>
+          <Route path="/product/:productId" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<LoginSignup />} />
         </Routes>

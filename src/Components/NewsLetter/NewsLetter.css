@@ -1,4 +1,8 @@
 .newsletter {
+    background: linear-gradient(180deg, #fde1ff 0%, #e1ffea22 60%);
+}
+
+/* .newsletter {
     width: 65%;
     height: 45vh;
     display: flex;
@@ -52,4 +56,4 @@
             cursor: pointer;
         }
     }
-}
+} */

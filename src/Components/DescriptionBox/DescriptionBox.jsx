@@ -1,30 +1,24 @@
 import React from "react";
-import "./DescriptionBox.css";
 
-export const DescriptionBox = () => {
+const DescriptionBox = ({ description }) => {
   return (
-    <div className="descriptionbox">
-      <div className="descriptionbox-navigator">
-        <div className="descriptionbox-navbox">Description</div>
-        <div className="descriptionbox-navbox fade">Reviews (122)</div>
-      </div>
-      <div className="descriptionbox-description">
-        <p>
-          An e-commerce website is an online platform that facilitates the
-          buying and selling of products or services over the internet. It
-          serves as a virtual marketplace where businesses and individuals can
-          showcase their products, interact with customers, and conduct
-          transactions without the need for a physical presence. E-commerce
-          websites have gained immense popularity due to their convenience,
-          accessibility, and the global reach they offer.
-        </p>
-        <p>
-          E-commerce websites typically display products or services along with
-          detailed descriptions, images, prices, and any available variations
-          (e.g., sizes, colors). Each product usually has its own dedicated page
-          with relevant information.
-        </p>
+    <div className="container my-5">
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <span className="nav-link active fw-semibold">Description</span>
+        </li>
+      </ul>
+      <div className="border p-4 mt-3 bg-light">
+        {description ? (
+          <div dangerouslySetInnerHTML={{ __html: description }} />
+        ) : (
+          <p className="text-muted">
+            No description available for this product.
+          </p>
+        )}
       </div>
     </div>
   );
 };
+
+export default DescriptionBox;

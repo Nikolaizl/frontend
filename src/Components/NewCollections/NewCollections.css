@@ -1,4 +1,9 @@
-.new-collections {
+.message {
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+/* .new-collections {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,4 +29,4 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     margin-top: 50px;
     gap: 30px;
-}
+} */

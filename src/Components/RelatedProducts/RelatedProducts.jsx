@@ -1,26 +1,30 @@
 import React from "react";
-import "./RelatedProducts.css";
-import dataProduct from "../Assets/data";
 import Item from "../Item/Item";
+import "./RelatedProducts.css";
 
-export const RelatedProducts = () => {
+const RelatedProducts = ({ products }) => {
+  if (!products || products.length === 0) {
+    return <p>No related products found.</p>;
+  }
+
   return (
     <div className="relatedproducts">
-      <h1>Related Products</h1>
-      <hr />
-      <div className="relatedproducts-item">
-        {dataProduct.map((item, i) => {
-          return (
-            <Item
-              key={i}
-              id={item.id}
-              name={item.name}
-              image={item.image}
-              new_price={item.new_price}
-              old_price={item.old_price}
-            />
-          );
-        })}
+      <h2>Related Products</h2>
+      <div className="relatedproducts-list">
+        {products.map((prod) => (
+          <Item
+            key={prod.productId}
+            id={prod.productId}
+            name={prod.productName}
+            image={
+              prod.defaultImageUrl
+                ? `https://www.zappos.com${prod.defaultImageUrl}`
+                : "/placeholder.png"
+            }
+            new_price={prod.price?.currentPrice || ""}
+            old_price={prod.price?.originalPrice || ""}
+          />
+        ))}
       </div>
     </div>
   );
