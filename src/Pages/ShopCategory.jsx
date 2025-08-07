@@ -4,12 +4,14 @@ import dropdownIcon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Item/Item";
 import { getCategoryProducts } from "../api/zappos";
 import { ShopContext } from "../Context/ShopContext";
+import { ClipLoader } from "react-spinners";
 
 export const ShopCategory = (props) => {
   //zappos api integration
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [sortOption, setSortOption] = useState("");
 
   const { selectedCategory } = useContext(ShopContext);
 
@@ -42,6 +44,39 @@ export const ShopCategory = (props) => {
     fetchProducts();
   }, [selectedCategory]);
 
+  if (loading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}
+      >
+        <ClipLoader />
+      </div>
+    );
+  }
+
+  //Sorting logic
+  const sortedProducts = [...products].sort((a, b) => {
+    const cleanPrice = (price) => {
+      if (!price) return 0;
+      const cleaned = price.toString().replace(/[^0-9.]/g, "");
+      return parseFloat(cleaned) || 0;
+    };
+
+    const priceA = cleanPrice(a.price);
+    const priceB = cleanPrice(b.price);
+
+    if (sortOption === "price-low") {
+      return priceA - priceB;
+    } else if (sortOption === "price-high") {
+      return priceB - priceA;
+    } else if (sortOption === "name-asc") {
+      return a.productName.localeCompare(b.productName);
+    } else if (sortOption === "name-desc") {
+      return b.productName.localeCompare(a.productName);
+    }
+    return 0;
+  });
+
   return (
     <div className="shop-category">
       <img className="shopcategory-banner" src={props.banner} alt="" />
@@ -54,15 +89,24 @@ export const ShopCategory = (props) => {
           out of {products.length} products
         </p>
         <div className="shopcategory-sort">
-          Sort by <img src={dropdownIcon} alt="" />
+          <label htmlFor="sort">Sort by: </label>
+          <select
+            id="sort"
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+          >
+            <option value="">Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name-asc">Name: A to Z</option>
+            <option value="name-desc">Name: Z to A</option>
+          </select>
         </div>
       </div>
       <div className="shopcategory-products">
-        {loading && <p className="message">Loading products...</p>}
         {error && <p className="message">{error}</p>}
-        {products.slice(0, 16).map((item, i) => {
+        {sortedProducts.slice(0, 16).map((item, i) => {
           const showOldPrice = item.price !== item.originalPrice;
-
           return (
             <Item
               key={i}
@@ -71,6 +115,7 @@ export const ShopCategory = (props) => {
               image={`https://m.media-amazon.com/images/I/${item.msaImageId}._AC_SR700,525_.jpg`}
               new_price={item.price}
               old_price={showOldPrice ? item.originalPrice : null}
+              category={selectedCategory}
             />
           );
         })}

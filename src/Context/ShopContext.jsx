@@ -1,63 +1,68 @@
 import React, { createContext, useState } from "react";
-import allProducts from "../Components/Assets/all_product";
 
 export const ShopContext = createContext(null);
 
-const getDefaultCart = () => {
-  let cart = {};
-  for (let index = 0; index < allProducts.length + 1; index++) {
-    cart[index] = 0;
-  }
-  return cart;
-};
-
 const ShopContextProvider = (props) => {
-  const [cartItems, setCartItems] = useState(getDefaultCart());
+  const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    console.log(cartItems);
+  const addToCart = (product) => {
+    setCartItems((prev) => {
+      const existingItem = prev.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [
+        ...prev,
+        { ...product, price: Number(product.price), quantity: 1 },
+      ];
+    });
   };
 
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-    console.log(cartItems);
+  const removeFromCart = (id) => {
+    setCartItems((prev) =>
+      prev
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   };
 
   const getTotalAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        let itemInfo = allProducts.find(
-          (product) => product.id === Number(item)
-        );
-        totalAmount += itemInfo.new_price * cartItems[item];
-        return totalAmount;
-      }
-    }
+    return cartItems.reduce(
+      (total, item) => total + Number(item.price) * item.quantity,
+      0
+    );
   };
 
   const getTotalItems = () => {
-    let totalItem = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        totalItem += cartItems[item];
-      }
-    }
-    return totalItem;
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
   const [selectedCategory, setSelectedCategory] = useState("shop");
+  const [selectedProduct, setSelectedProductState] = useState(
+    JSON.parse(localStorage.getItem("selectedProduct")) || null
+  );
+
+  const setSelectedProduct = (product) => {
+    setSelectedProductState(product);
+    localStorage.setItem("selectedProduct", JSON.stringify(product));
+  };
 
   const contextValue = {
-    allProducts,
-    selectedCategory,
-    setSelectedCategory,
     cartItems,
     addToCart,
     removeFromCart,
     getTotalAmount,
     getTotalItems,
+    selectedCategory,
+    setSelectedCategory,
+    selectedProduct,
+    setSelectedProduct,
   };
 
   return (

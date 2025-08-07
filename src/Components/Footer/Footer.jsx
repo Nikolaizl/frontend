@@ -23,13 +23,19 @@ export default function Footer() {
       </ul>
       <div className="footer-social-icons">
         <div className="footer-icons-container">
-          <img src={instagramIcon} alt="instagram icon" />
+          <a href="https://www.instagram.com/">
+            <img src={instagramIcon} alt="instagram icon" />
+          </a>
         </div>
         <div className="footer-icons-container">
-          <img src={pinterestIcon} alt="pinterest icon" />
+          <a href="https://www.pinterest.com/">
+            <img src={pinterestIcon} alt="pinterest icon" />
+          </a>
         </div>
         <div className="footer-icons-container">
-          <img src={whatsappIcon} alt="whatsapp icon" />
+          <a href="https://www.whatsapp.com/">
+            <img src={whatsappIcon} alt="whatsapp icon" />
+          </a>
         </div>
       </div>
       <div className="footer-copyright">

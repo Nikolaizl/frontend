@@ -107,3 +107,36 @@
         cursor: pointer;
     }
 }
+
+.cart-empty {
+  text-align: center;
+  padding: 50px 20px;
+  color: #555;
+}
+
+.cart-empty h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.cart-empty p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #777;
+}
+
+.cart-empty-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #171717;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.cart-empty-btn:hover {
+  background-color: #333;
+}

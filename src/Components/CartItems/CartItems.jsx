@@ -4,8 +4,20 @@ import { ShopContext } from "../../Context/ShopContext";
 import removeIcon from "../Assets/cart_cross_icon.png";
 
 export const CartItems = () => {
-  const { allProducts, cartItems, removeFromCart, getTotalAmount } =
-    useContext(ShopContext);
+  const { cartItems, removeFromCart, getTotalAmount } = useContext(ShopContext);
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="cart-empty">
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven’t added anything yet.</p>
+        <a href="/shop" className="cart-empty-btn">
+          Start Shopping
+        </a>
+      </div>
+    );
+  }
+
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
@@ -17,33 +29,28 @@ export const CartItems = () => {
         <p>Remove</p>
       </div>
       <hr />
-      {allProducts.map((e) => {
-        if (cartItems[e.id] > 0) {
-          return (
-            <div>
-              <div className="cartitems-format-main cartitems-format">
-                <img src={e.image} alt="" className="carticon-product-icon" />
-                <p>{e.name}</p>
-                <p>${e.new_price}</p>
-                <button className="cartitems-quantity">
-                  {cartItems[e.id]}
-                </button>
-                <p>${e.new_price * cartItems[e.id]}</p>
-                <img
-                  className="cartitems-remove-icon"
-                  onClick={() => {
-                    removeFromCart(e.id);
-                  }}
-                  src={removeIcon}
-                  alt="remove"
-                />
-              </div>
-              <hr />
-            </div>
-          );
-        }
-        return null;
-      })}
+
+      {cartItems.map((item) => (
+        <div key={item.id} className="cartitems-format-main cartitems-format">
+          <img
+            src={item.image}
+            alt={item.name}
+            className="carticon-product-icon"
+          />
+          <p>{item.name}</p>
+          <p>${item.price.toFixed(2)}</p>
+          <button className="cartitems-quantity">{item.quantity}</button>
+          <p>${(item.price * item.quantity).toFixed(2)}</p>
+          <img
+            className="cartitems-remove-icon"
+            onClick={() => removeFromCart(item.id)}
+            src={removeIcon}
+            alt="remove"
+          />
+        </div>
+      ))}
+      <hr />
+
       <div className="cartitems-down">
         <div className="cartitems-total">
           <h1>Cart Totals</h1>

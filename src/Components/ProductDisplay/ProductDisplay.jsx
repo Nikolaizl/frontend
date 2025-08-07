@@ -1,75 +1,70 @@
 import React, { useContext } from "react";
 import "./ProductDisplay.css";
-import starIcon from "../Assets/star_icon.png";
-import starDull from "../Assets/star_dull_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
 
-export const ProductDisplay = (props) => {
-  const { product } = props;
+export const ProductDisplay = ({ product }) => {
   const { addToCart } = useContext(ShopContext);
 
   return (
     <div className="productdisplay">
+      {/* LEFT SECTION */}
       <div className="productdisplay-left">
-        <div className="productdisplay-img-list">
-          <img src={product.image} alt="product" />
-          <img src={product.image} alt="product" />
-          <img src={product.image} alt="product" />
-          <img src={product.image} alt="product" />
-        </div>
         <div className="productdisplay-img">
           <img
             className="productdisplay-main-img"
             src={product.image}
-            alt="product"
+            alt={product.name}
           />
         </div>
       </div>
+
+      {/* RIGHT SECTION */}
       <div className="productdisplay-right">
         <h1>{product.name}</h1>
-        <div className="productdisplay-right-stars">
-          <img src={starIcon} alt="" />
-          <img src={starIcon} alt="" />
-          <img src={starIcon} alt="" />
-          <img src={starIcon} alt="" />
-          <img src={starDull} alt="" />
-          <p>(122)</p>
-        </div>
+        <p className="brand">Brand: {product.brand}</p>
+
+        {/* PRICES */}
         <div className="productdisplay-right-prices">
-          <div className="productdisplay-right-price-old">
-            ${product.old_price}
-          </div>
-          <div className="productdisplay-right-price-new">
-            ${product.new_price}
-          </div>
+          {product.old_price && (
+            <div className="productdisplay-right-price-old">
+              ${product.old_price}
+            </div>
+          )}
+          <div className="productdisplay-right-price-new">${product.price}</div>
         </div>
-        <div className="productdisplay-right-description">
-          A lightweight, usually knitted, pullover shirt, close-fitting and with
-          a round neckline and short sleeves, worn as an undershirt or outer
-          garment.
-        </div>
-        <div className="productdisplay-right-size">
-          <h1>Select Size</h1>
-          <div className="productdisplay-right-sizes">
-            <div>S</div>
-            <div>M</div>
-            <div>L</div>
-            <div>XL</div>
-            <div>XXL</div>
+
+        {/* SIZES */}
+        {product.sizes && product.sizes.length > 0 && (
+          <div className="productdisplay-right-size">
+            <h1>Select Size</h1>
+            <div className="productdisplay-right-sizes">
+              {product.sizes.map((size, index) => (
+                <div key={index}>{size}</div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* ADD TO CART */}
         <button
           onClick={() => {
-            addToCart(product.id);
+            addToCart({
+              id: product.id,
+              name: product.name,
+              image: product.image,
+              price: product.price,
+            });
           }}
         >
           ADD TO CART
         </button>
+
+        {/* CATEGORY */}
         <p className="productdisplay-right-category">
-          <span>Category:</span> Women, T-shirt, Crop Top
+          <span>Category:</span> {product.category}
         </p>
         <p className="productdisplay-right-category">
-          <span>Tags:</span> Modern, Latest
+          <span>Brand:</span> {product.brand}
         </p>
       </div>
     </div>

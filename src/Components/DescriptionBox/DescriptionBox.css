@@ -17,11 +17,6 @@
     border: 1px solid #d0d0d0;
 }
 
-.descriptionbox-navbox.fade{
-    background: #fbfbfb;
-    color: #555;
-}
-
 .descriptionbox-description {
     display: flex;
     flex-direction: column;
