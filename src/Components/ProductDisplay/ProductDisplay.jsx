@@ -25,7 +25,7 @@ export const ProductDisplay = ({ product }) => {
 
         {/* PRICES */}
         <div className="productdisplay-right-prices">
-          {product.old_price && (
+          {product.old_price && product.old_price !== product.price && (
             <div className="productdisplay-right-price-old">
               ${product.old_price}
             </div>

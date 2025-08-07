@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./CSS/ShopCategory.css";
-import dropdownIcon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Item/Item";
 import { getCategoryProducts } from "../api/zappos";
 import { ShopContext } from "../Context/ShopContext";
@@ -84,8 +83,7 @@ export const ShopCategory = (props) => {
       <div className="shopcategory-indexSort">
         <p>
           <span>
-            Showing {products.length === 0 ? 0 : 1}-
-            {products.length < 16 ? products.length : 16}
+            Showing {products.length === 0 ? 0 : 1}-{visibleCount}
           </span>{" "}
           out of {products.length} products
         </p>
