@@ -11,7 +11,7 @@ export const CartItems = () => {
       <div className="cart-empty">
         <h2>Your cart is empty</h2>
         <p>Looks like you haven’t added anything yet.</p>
-        <a href="/shop" className="cart-empty-btn">
+        <a href="/" className="cart-empty-btn">
           Start Shopping
         </a>
       </div>

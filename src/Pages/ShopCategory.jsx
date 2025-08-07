@@ -12,6 +12,7 @@ export const ShopCategory = (props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sortOption, setSortOption] = useState("");
+  const [visibleCount, setVisibleCount] = useState(16);
 
   const { selectedCategory } = useContext(ShopContext);
 
@@ -105,7 +106,7 @@ export const ShopCategory = (props) => {
       </div>
       <div className="shopcategory-products">
         {error && <p className="message">{error}</p>}
-        {sortedProducts.slice(0, 16).map((item, i) => {
+        {sortedProducts.slice(0, visibleCount).map((item, i) => {
           const showOldPrice = item.price !== item.originalPrice;
           return (
             <Item
@@ -120,7 +121,14 @@ export const ShopCategory = (props) => {
           );
         })}
       </div>
-      <div className="shopcategory-loadmore">Explore More</div>
+      {visibleCount < sortedProducts.length && (
+        <div
+          className="shopcategory-loadmore"
+          onClick={() => setVisibleCount((prev) => prev + 16)}
+        >
+          Explore More
+        </div>
+      )}
     </div>
   );
 };

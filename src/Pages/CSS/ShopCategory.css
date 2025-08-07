@@ -47,6 +47,18 @@
     color: #787878;
     font-size: 18px;
     font-weight: 500;
+    cursor: pointer;
+}
+
+.shopcategory-loadmore:hover {
+    background: #787878;
+    color: #ededed;
+    transform: scaleY(1.1);
+}
+
+.shopcategory-loadmore:active {
+    transform: translateY(5px);
+
 }
 
 .message {
